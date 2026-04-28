@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>DarkRoom Updates</title>
+    <link>https://maydisease.github.io/codex-image-studio-distribution/appcast.xml</link>
+    <description>DarkRoom macOS updates</description>
+    <language>en</language>
+    <item>
+      <title>Version 0.1.0</title>
+      <pubDate>Tue, 28 Apr 2026 12:00:00 +0000</pubDate>
+      <sparkle:version>0.1.0</sparkle:version>
+      <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://maydisease.github.io/codex-image-studio-distribution/releases/0.1.0.html</sparkle:releaseNotesLink>
+      <enclosure
+        url="https://maydisease.github.io/codex-image-studio-distribution/downloads/codex-image-studio-macos-0.1.0.zip"
+        sparkle:version="0.1.0"
+        sparkle:shortVersionString="0.1.0"
+        sparkle:edSignature="pEYOjypDn7bBZeN9qrXeBSv3hAisxXAK2GdVya00dBAIlDzm3WCv8vTBwC2AH/EnR6HCTV9sLpTO3cCcDlHbCw=="
+        length="13262543"
+        type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
