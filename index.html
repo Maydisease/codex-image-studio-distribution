@@ -424,7 +424,7 @@
         </div>
         <nav class="top-links" aria-label="快捷链接">
           <a class="text-link" href="./appcast.xml">更新源</a>
-          <a class="text-link" id="nav-release-notes" href="./releases/0.1.11.html">版本说明</a>
+          <a class="text-link" id="nav-release-notes" href="./releases/">版本说明</a>
         </nav>
       </header>
 
@@ -440,23 +440,23 @@
         <div class="hero-meta">
           <section class="download-panel" aria-labelledby="download-title">
             <p class="kicker" id="download-title">Latest Release</p>
-            <p class="version" id="latest-version">v0.1.11</p>
+            <p class="version" id="latest-version">读取中</p>
             <div class="meta-row">
               <span class="meta-pill" id="system-pill">macOS 13+</span>
-              <span class="meta-pill" id="updated-pill">发布于 2026-04-28</span>
+              <span class="meta-pill" id="updated-pill">连接更新源</span>
             </div>
             <div class="actions">
               <a
                 class="primary-button"
                 id="download-button"
-                href="./downloads/codex-image-studio-macos-0.1.11.zip"
+                href="./downloads/"
               >
                 下载最新版
               </a>
               <a
                 class="secondary-button"
                 id="release-notes-button"
-                href="./releases/0.1.11.html"
+                href="./releases/"
               >
                 查看版本说明
               </a>
@@ -472,7 +472,7 @@
               </div>
               <div class="summary-item">
                 <p class="summary-label">安装包</p>
-                <p class="summary-value" id="archive-name">Sparkle ZIP</p>
+                <p class="summary-value" id="archive-name">读取中</p>
               </div>
               <div class="summary-item">
                 <p class="summary-label">更新记录</p>
@@ -597,6 +597,17 @@
         }
       };
 
+      const applyFallback = () => {
+        text(document.querySelector("#latest-version"), "线上访问");
+        text(document.querySelector("#updated-pill"), "本地文件无法读取更新源");
+        text(document.querySelector("#archive-name"), "请打开公开下载页");
+
+        const landingPage = "https://maydisease.github.io/codex-image-studio-distribution/";
+        href(document.querySelector("#download-button"), landingPage);
+        href(document.querySelector("#release-notes-button"), landingPage);
+        href(document.querySelector("#nav-release-notes"), landingPage);
+      };
+
       fetch("./appcast.xml", { cache: "no-store" })
         .then((response) => {
           if (!response.ok) {
@@ -609,10 +620,13 @@
           const item = xml.querySelector("channel > item");
           if (item) {
             applyItem(item);
+          } else {
+            applyFallback();
           }
         })
         .catch((error) => {
           console.warn(error);
+          applyFallback();
         });
     </script>
   </body>
