@@ -2,7 +2,7 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
   <channel>
     <title>DarkRoom Updates</title>
-    <link>https://maydisease.github.io/codex-image-studio-distribution/appcast.xml</link>
+    <link>https://maydisease.github.io/codex-image-studio-distribution/appcast-intel.xml</link>
     <description>DarkRoom macOS updates</description>
     <language>en</language>
     <item>
@@ -13,11 +13,11 @@
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <sparkle:releaseNotesLink>https://maydisease.github.io/codex-image-studio-distribution/releases/0.13.0.html</sparkle:releaseNotesLink>
       <enclosure
-        url="https://maydisease.github.io/codex-image-studio-distribution/downloads/codex-image-studio-macos-0.13.0.zip"
+        url="https://maydisease.github.io/codex-image-studio-distribution/downloads/codex-image-studio-macos-intel-0.13.0.zip"
         sparkle:version="20260429.101821"
         sparkle:shortVersionString="0.13.0"
-        sparkle:edSignature="gD8jKEgRomtbt3Fh7hJZrzUNQyX87UVbacRn7WXlO2zryAh/AokTHyp23HDynaTbYdUgtTQty1QXenFsyjumCQ=="
-        length="12616621"
+        sparkle:edSignature="EFrigRF4i/3OdIUiuMEKdlI2qKUwC05xelz7WG646ibABOhAEXD0jFSMmYQnuKCo3TF4cujmsmiQXN2ht3nZDg=="
+        length="13384397"
         type="application/octet-stream" />
     </item>
   </channel>
