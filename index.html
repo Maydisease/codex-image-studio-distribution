@@ -4,32 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DarkRoom</title>
-    <meta
-      name="description"
-      content="DarkRoom 是一个面向 macOS 的图片工作台。下载最新版本并查看版本说明。"
-    />
+    <meta name="description" content="DarkRoom for macOS. Download the latest release." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,600&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #f4f1eb;
-        --bg-elevated: rgba(255, 255, 255, 0.72);
-        --panel: rgba(255, 255, 255, 0.92);
-        --line: rgba(29, 29, 24, 0.11);
-        --line-strong: rgba(29, 29, 24, 0.2);
-        --text: #1d1d18;
-        --muted: rgba(29, 29, 24, 0.62);
-        --soft: rgba(29, 29, 24, 0.42);
-        --accent: #1f2722;
-        --accent-soft: #eef1eb;
-        --shadow: 0 20px 60px rgba(58, 49, 32, 0.08);
-        --radius-xl: 28px;
-        --radius-lg: 20px;
-        --radius-md: 14px;
+        --page: #f7f7f4;
+        --surface: #ffffff;
+        --ink: #171915;
+        --muted: #6f726c;
+        --faint: #a3a69f;
+        --line: #dedfd9;
+        --line-strong: #c9cbc4;
+        --button: #1f2722;
+        --button-hover: #141a16;
       }
 
       * {
@@ -44,10 +36,12 @@
         margin: 0;
         min-height: 100vh;
         font-family: "IBM Plex Sans", ui-sans-serif, sans-serif;
-        color: var(--text);
+        color: var(--ink);
         background:
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 28%),
-          linear-gradient(180deg, #f7f5f1 0%, var(--bg) 100%);
+          linear-gradient(rgba(23, 25, 21, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(23, 25, 21, 0.025) 1px, transparent 1px),
+          var(--page);
+        background-size: 28px 28px;
       }
 
       a {
@@ -55,282 +49,198 @@
       }
 
       .shell {
-        width: min(1120px, calc(100vw - 32px));
+        width: min(980px, calc(100vw - 36px));
         margin: 0 auto;
-        padding: 24px 0 56px;
+        padding: 26px 0 54px;
       }
 
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 24px;
-        padding: 0 6px;
+        gap: 18px;
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
+        min-width: 0;
       }
 
-      .brand-mark {
-        width: 12px;
-        height: 12px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #2c342e 0%, #151814 100%);
-        box-shadow: 0 0 0 6px rgba(31, 39, 34, 0.07);
+      .brand img {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
       }
 
       .brand-name {
         font-size: 14px;
         font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
+        letter-spacing: 0;
       }
 
-      .top-links {
-        display: inline-flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.5);
-        text-decoration: none;
+      .nav-link {
+        padding: 9px 0;
         color: var(--muted);
-        font-size: 13px;
-        transition:
-          border-color 180ms ease,
-          color 180ms ease,
-          background 180ms ease;
+        font-size: 14px;
+        text-decoration: none;
       }
 
-      .text-link:hover {
-        color: var(--text);
-        border-color: var(--line-strong);
-        background: rgba(255, 255, 255, 0.82);
+      .nav-link:hover {
+        color: var(--ink);
       }
 
       .hero {
-        position: relative;
-        overflow: hidden;
+        min-height: calc(100vh - 160px);
         display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
-        gap: 24px;
-        padding: 32px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-xl);
-        background: var(--bg-elevated);
-        backdrop-filter: blur(18px);
-        box-shadow: var(--shadow);
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 35%),
-          radial-gradient(circle at 90% 15%, rgba(32, 39, 34, 0.055), transparent 24%);
-        pointer-events: none;
-      }
-
-      .hero-copy,
-      .hero-meta {
-        position: relative;
-        z-index: 1;
-      }
-
-      .eyebrow {
-        display: inline-flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 18px;
-        color: var(--muted);
-        font-size: 12px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        justify-items: center;
+        padding: 62px 0 44px;
       }
 
-      .eyebrow::before {
-        content: "";
-        width: 28px;
-        height: 1px;
-        background: var(--line-strong);
+      .release {
+        width: min(620px, 100%);
+        text-align: center;
+      }
+
+      .app-icon {
+        width: 86px;
+        height: 86px;
+        margin-bottom: 26px;
+        border-radius: 20px;
+        box-shadow: 0 18px 40px rgba(31, 39, 34, 0.12);
       }
 
       h1 {
         margin: 0;
         font-family: "Newsreader", ui-serif, serif;
-        font-size: clamp(46px, 7vw, 76px);
-        line-height: 0.94;
+        font-size: 74px;
+        line-height: 0.95;
         font-weight: 600;
-        letter-spacing: -0.04em;
+        letter-spacing: 0;
       }
 
-      .hero-copy p {
-        width: min(44ch, 100%);
-        margin: 18px 0 0;
+      .intro {
+        width: min(460px, 100%);
+        margin: 20px auto 0;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.75;
+        font-size: 17px;
+        line-height: 1.7;
       }
 
-      .hero-meta {
+      .meta {
         display: flex;
-        flex-direction: column;
-        gap: 14px;
-        justify-content: space-between;
-      }
-
-      .download-panel,
-      .summary-panel {
-        padding: 22px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-lg);
-        background: var(--panel);
-      }
-
-      .kicker {
-        margin: 0 0 8px;
-        color: var(--soft);
-        font-size: 12px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .version {
-        margin: 0;
-        font-family: "Newsreader", ui-serif, serif;
-        font-size: 34px;
-        line-height: 1;
-        letter-spacing: -0.04em;
-      }
-
-      .meta-row {
-        margin-top: 16px;
-        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 10px;
+        margin-top: 26px;
       }
 
-      .meta-pill {
-        padding: 8px 12px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        background: #faf8f4;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .actions {
-        margin-top: 18px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
-      .primary-button,
-      .secondary-button {
+      .pill {
+        min-height: 34px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 46px;
-        padding: 0 18px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
         border-radius: 999px;
-        text-decoration: none;
-        font-size: 14px;
+        background: rgba(255, 255, 255, 0.68);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .download,
+      .release-notes {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 0 20px;
+        font-size: 15px;
         font-weight: 600;
+        text-decoration: none;
         transition:
-          transform 180ms ease,
-          background 180ms ease,
-          border-color 180ms ease,
-          color 180ms ease;
+          transform 160ms ease,
+          border-color 160ms ease,
+          background 160ms ease;
       }
 
-      .primary-button {
-        background: var(--accent);
-        color: white;
-        border: 1px solid var(--accent);
+      .download {
+        min-width: 156px;
+        border: 1px solid var(--button);
+        background: var(--button);
+        color: #fff;
       }
 
-      .primary-button:hover,
-      .secondary-button:hover {
+      .download:hover {
+        background: var(--button-hover);
         transform: translateY(-1px);
       }
 
-      .secondary-button {
-        color: var(--text);
+      .release-notes {
+        min-width: 116px;
         border: 1px solid var(--line-strong);
-        background: white;
+        background: rgba(255, 255, 255, 0.74);
+        color: var(--ink);
       }
 
-      .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
+      .release-notes:hover {
+        border-color: #aeb1aa;
+        transform: translateY(-1px);
       }
 
-      .summary-item {
-        padding-top: 4px;
-      }
-
-      .summary-label {
-        margin: 0 0 6px;
-        color: var(--soft);
+      .fine-print {
+        margin-top: 18px;
+        color: var(--faint);
         font-size: 12px;
-      }
-
-      .summary-value {
-        margin: 0;
-        font-size: 14px;
-        color: var(--text);
-      }
-
-      @media (max-width: 900px) {
-        .hero {
-          grid-template-columns: 1fr;
-        }
-
-        .summary-grid {
-          grid-template-columns: 1fr;
-        }
       }
 
       @media (max-width: 640px) {
         .shell {
-          width: min(100vw - 20px, 1120px);
-          padding-top: 12px;
-          padding-bottom: 36px;
-        }
-
-        .topbar {
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 16px;
-          gap: 12px;
+          width: min(100vw - 28px, 980px);
+          padding-top: 18px;
+          padding-bottom: 32px;
         }
 
         .hero {
-          padding: 24px 20px;
+          min-height: calc(100vh - 118px);
+          padding: 48px 0 28px;
         }
 
-        .download-panel,
-        .summary-panel {
-          padding-left: 18px;
-          padding-right: 18px;
+        .app-icon {
+          width: 74px;
+          height: 74px;
+          border-radius: 18px;
         }
 
         h1 {
-          font-size: clamp(40px, 15vw, 56px);
+          font-size: 54px;
+        }
+
+        .intro {
+          font-size: 15px;
+        }
+
+        .actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .download,
+        .release-notes {
+          width: 100%;
         }
       }
     </style>
@@ -338,176 +248,32 @@
   <body>
     <main class="shell">
       <header class="topbar">
-        <div class="brand">
-          <span class="brand-mark" aria-hidden="true"></span>
+        <a class="brand" href="./" aria-label="DarkRoom">
+          <img src="./app-icon-512.png" alt="" />
           <span class="brand-name">DarkRoom</span>
-        </div>
-        <nav class="top-links" aria-label="快捷链接">
-          <a class="text-link" id="nav-release-notes" href="./releases/">版本说明</a>
-        </nav>
+        </a>
+        <a class="nav-link" href="./releases/0.1.12.html">版本说明</a>
       </header>
 
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="eyebrow">macOS Download</div>
-          <h1>DarkRoom</h1>
-          <p>
-            一个面向 macOS 的图片工作台。支持工作台、收藏夹、回收站与在线升级，保持轻量，同时把核心流程收拢在一个安静的桌面界面里。
-          </p>
-        </div>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="release">
+          <img class="app-icon" src="./app-icon-512.png" alt="" />
+          <h1 id="page-title">DarkRoom</h1>
+          <p class="intro">面向 macOS 的图片工作台。整理、收藏、回收与继续创作，都在一个干净的桌面窗口里完成。</p>
 
-        <div class="hero-meta">
-          <section class="download-panel" aria-labelledby="download-title">
-            <p class="kicker" id="download-title">Latest Release</p>
-            <p class="version" id="latest-version">读取中</p>
-            <div class="meta-row">
-              <span class="meta-pill" id="system-pill">macOS 13+</span>
-              <span class="meta-pill" id="updated-pill">正在同步</span>
-            </div>
-            <div class="actions">
-              <a
-                class="primary-button"
-                id="download-button"
-                href="./downloads/"
-              >
-                下载最新版
-              </a>
-              <a
-                class="secondary-button"
-                id="release-notes-button"
-                href="./releases/"
-              >
-                查看版本说明
-              </a>
-            </div>
-          </section>
+          <div class="meta" aria-label="版本信息">
+            <span class="pill">v0.1.12</span>
+            <span class="pill">macOS 13+</span>
+          </div>
 
-          <section class="summary-panel" aria-labelledby="summary-title">
-            <p class="kicker" id="summary-title">Overview</p>
-            <div class="summary-grid">
-              <div class="summary-item">
-                <p class="summary-label">适用系统</p>
-                <p class="summary-value" id="summary-system">macOS 13+</p>
-              </div>
-              <div class="summary-item">
-                <p class="summary-label">发布内容</p>
-                <p class="summary-value">最新 macOS 安装包</p>
-              </div>
-              <div class="summary-item">
-                <p class="summary-label">更新记录</p>
-                <p class="summary-value">版本说明随发布同步更新</p>
-              </div>
-            </div>
-          </section>
+          <div class="actions">
+            <a class="download" href="./downloads/codex-image-studio-macos-0.1.12.zip">下载 DarkRoom</a>
+            <a class="release-notes" href="./releases/0.1.12.html">版本说明</a>
+          </div>
+
+          <p class="fine-print">下载后解压并移动到“应用程序”。</p>
         </div>
       </section>
-
     </main>
-
-    <script>
-      const formatDate = (value) => {
-        const parsed = new Date(value);
-        if (Number.isNaN(parsed.getTime())) {
-          return null;
-        }
-
-        return new Intl.DateTimeFormat("zh-CN", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).format(parsed);
-      };
-
-      const text = (node, value) => {
-        if (node && value) {
-          node.textContent = value;
-        }
-      };
-
-      const href = (node, value) => {
-        if (node && value) {
-          node.href = value;
-        }
-      };
-
-      const findChildText = (node, name) => {
-        if (!node) {
-          return null;
-        }
-
-        const match = Array.from(node.children).find((child) => {
-          return (
-            child.localName === name ||
-            child.tagName === name ||
-            child.tagName === `sparkle:${name}`
-          );
-        });
-
-        return match?.textContent?.trim() || null;
-      };
-
-      const applyItem = (item) => {
-        const version = findChildText(item, "shortVersionString");
-        const pubDate = findChildText(item, "pubDate");
-        const notesLink = findChildText(item, "releaseNotesLink");
-        const enclosure = item.querySelector("enclosure");
-        const downloadUrl = enclosure?.getAttribute("url");
-        const minimumSystem = findChildText(item, "minimumSystemVersion");
-
-        if (version) {
-          text(document.querySelector("#latest-version"), `v${version}`);
-        }
-
-        if (minimumSystem) {
-          text(document.querySelector("#system-pill"), `macOS ${minimumSystem}+`);
-          text(document.querySelector("#summary-system"), `macOS ${minimumSystem}+`);
-        }
-
-        const formattedDate = formatDate(pubDate);
-        if (formattedDate) {
-          text(document.querySelector("#updated-pill"), `发布于 ${formattedDate}`);
-        }
-
-        if (downloadUrl) {
-          href(document.querySelector("#download-button"), downloadUrl);
-        }
-
-        if (notesLink) {
-          href(document.querySelector("#release-notes-button"), notesLink);
-          href(document.querySelector("#nav-release-notes"), notesLink);
-        }
-      };
-
-      const applyFallback = () => {
-        text(document.querySelector("#latest-version"), "线上访问");
-        text(document.querySelector("#updated-pill"), "请打开线上页面");
-
-        const landingPage = "https://maydisease.github.io/codex-image-studio-distribution/";
-        href(document.querySelector("#download-button"), landingPage);
-        href(document.querySelector("#release-notes-button"), landingPage);
-        href(document.querySelector("#nav-release-notes"), landingPage);
-      };
-
-      fetch("./appcast.xml", { cache: "no-store" })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to load appcast: ${response.status}`);
-          }
-          return response.text();
-        })
-        .then((xmlText) => {
-          const xml = new DOMParser().parseFromString(xmlText, "text/xml");
-          const item = xml.querySelector("channel > item");
-          if (item) {
-            applyItem(item);
-          } else {
-            applyFallback();
-          }
-        })
-        .catch((error) => {
-          console.warn(error);
-          applyFallback();
-        });
-    </script>
   </body>
 </html>
