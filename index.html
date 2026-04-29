@@ -562,15 +562,29 @@
         }
       };
 
+      const findChildText = (node, name) => {
+        if (!node) {
+          return null;
+        }
+
+        const match = Array.from(node.children).find((child) => {
+          return (
+            child.localName === name ||
+            child.tagName === name ||
+            child.tagName === `sparkle:${name}`
+          );
+        });
+
+        return match?.textContent?.trim() || null;
+      };
+
       const applyItem = (item) => {
-        const version = item.querySelector("sparkle\\:shortVersionString")?.textContent?.trim();
-        const pubDate = item.querySelector("pubDate")?.textContent?.trim();
-        const notesLink = item.querySelector("sparkle\\:releaseNotesLink")?.textContent?.trim();
+        const version = findChildText(item, "shortVersionString");
+        const pubDate = findChildText(item, "pubDate");
+        const notesLink = findChildText(item, "releaseNotesLink");
         const enclosure = item.querySelector("enclosure");
         const downloadUrl = enclosure?.getAttribute("url");
-        const minimumSystem = item
-          .querySelector("sparkle\\:minimumSystemVersion")
-          ?.textContent?.trim();
+        const minimumSystem = findChildText(item, "minimumSystemVersion");
 
         if (version) {
           text(document.querySelector("#latest-version"), `v${version}`);
