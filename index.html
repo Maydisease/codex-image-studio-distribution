@@ -1,11 +1,619 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <title>DarkRoom Updates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DarkRoom</title>
+    <meta
+      name="description"
+      content="DarkRoom 是一个面向 macOS 的图片工作台。下载最新版本，查看更新记录，并了解首次打开说明。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f1eb;
+        --bg-elevated: rgba(255, 255, 255, 0.72);
+        --panel: rgba(255, 255, 255, 0.92);
+        --line: rgba(29, 29, 24, 0.11);
+        --line-strong: rgba(29, 29, 24, 0.2);
+        --text: #1d1d18;
+        --muted: rgba(29, 29, 24, 0.62);
+        --soft: rgba(29, 29, 24, 0.42);
+        --accent: #1f2722;
+        --accent-soft: #eef1eb;
+        --shadow: 0 20px 60px rgba(58, 49, 32, 0.08);
+        --radius-xl: 28px;
+        --radius-lg: 20px;
+        --radius-md: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        color-scheme: light;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "IBM Plex Sans", ui-sans-serif, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 28%),
+          linear-gradient(180deg, #f7f5f1 0%, var(--bg) 100%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1120px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 24px 0 56px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+        padding: 0 6px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #2c342e 0%, #151814 100%);
+        box-shadow: 0 0 0 6px rgba(31, 39, 34, 0.07);
+      }
+
+      .brand-name {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .top-links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 13px;
+        transition:
+          border-color 180ms ease,
+          color 180ms ease,
+          background 180ms ease;
+      }
+
+      .text-link:hover {
+        color: var(--text);
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+        gap: 24px;
+        padding: 32px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        background: var(--bg-elevated);
+        backdrop-filter: blur(18px);
+        box-shadow: var(--shadow);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 35%),
+          radial-gradient(circle at 90% 15%, rgba(32, 39, 34, 0.055), transparent 24%);
+        pointer-events: none;
+      }
+
+      .hero-copy,
+      .hero-meta {
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--line-strong);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: "Newsreader", ui-serif, serif;
+        font-size: clamp(46px, 7vw, 76px);
+        line-height: 0.94;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-copy p {
+        width: min(44ch, 100%);
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      .download-panel,
+      .summary-panel {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--panel);
+      }
+
+      .kicker {
+        margin: 0 0 8px;
+        color: var(--soft);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .version {
+        margin: 0;
+        font-family: "Newsreader", ui-serif, serif;
+        font-size: 34px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .meta-row {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .meta-pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #faf8f4;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .actions {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .primary-button,
+      .secondary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition:
+          transform 180ms ease,
+          background 180ms ease,
+          border-color 180ms ease,
+          color 180ms ease;
+      }
+
+      .primary-button {
+        background: var(--accent);
+        color: white;
+        border: 1px solid var(--accent);
+      }
+
+      .primary-button:hover,
+      .secondary-button:hover {
+        transform: translateY(-1px);
+      }
+
+      .secondary-button {
+        color: var(--text);
+        border: 1px solid var(--line-strong);
+        background: white;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .summary-item {
+        padding-top: 4px;
+      }
+
+      .summary-label {
+        margin: 0 0 6px;
+        color: var(--soft);
+        font-size: 12px;
+      }
+
+      .summary-value {
+        margin: 0;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      .details {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .detail-card {
+        padding: 22px 22px 24px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      .detail-card h2 {
+        margin: 0 0 14px;
+        font-family: "Newsreader", ui-serif, serif;
+        font-size: 28px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+      }
+
+      .detail-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .steps,
+      .bullets {
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li,
+      .bullets li {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 12px;
+        padding: 12px 0;
+        border-top: 1px solid rgba(29, 29, 24, 0.08);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .steps li:first-child,
+      .bullets li:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      .steps strong,
+      .bullets strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .step-no {
+        font-size: 12px;
+        color: var(--soft);
+        padding-top: 2px;
+      }
+
+      .footer {
+        margin-top: 18px;
+        padding: 0 6px;
+        color: var(--soft);
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .footer a {
+        color: var(--muted);
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .details {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .shell {
+          width: min(100vw - 20px, 1120px);
+          padding-top: 12px;
+          padding-bottom: 36px;
+        }
+
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 16px;
+          gap: 12px;
+        }
+
+        .hero {
+          padding: 24px 20px;
+        }
+
+        .download-panel,
+        .summary-panel,
+        .detail-card {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        h1 {
+          font-size: clamp(40px, 15vw, 56px);
+        }
+      }
+    </style>
   </head>
   <body>
-    <h1>DarkRoom Updates</h1>
-    <p>Latest appcast: <a href="./appcast.xml">appcast.xml</a></p>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">DarkRoom</span>
+        </div>
+        <nav class="top-links" aria-label="快捷链接">
+          <a class="text-link" href="./appcast.xml">更新源</a>
+          <a class="text-link" id="nav-release-notes" href="./releases/0.1.11.html">版本说明</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">macOS Download</div>
+          <h1>DarkRoom</h1>
+          <p>
+            一个面向 macOS 的图片工作台。支持工作台、收藏夹、回收站与在线升级，保持轻量，同时把核心流程收拢在一个安静的桌面界面里。
+          </p>
+        </div>
+
+        <div class="hero-meta">
+          <section class="download-panel" aria-labelledby="download-title">
+            <p class="kicker" id="download-title">Latest Release</p>
+            <p class="version" id="latest-version">v0.1.11</p>
+            <div class="meta-row">
+              <span class="meta-pill" id="system-pill">macOS 13+</span>
+              <span class="meta-pill" id="updated-pill">发布于 2026-04-28</span>
+            </div>
+            <div class="actions">
+              <a
+                class="primary-button"
+                id="download-button"
+                href="./downloads/codex-image-studio-macos-0.1.11.zip"
+              >
+                下载最新版
+              </a>
+              <a
+                class="secondary-button"
+                id="release-notes-button"
+                href="./releases/0.1.11.html"
+              >
+                查看版本说明
+              </a>
+            </div>
+          </section>
+
+          <section class="summary-panel" aria-labelledby="summary-title">
+            <p class="kicker" id="summary-title">Overview</p>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <p class="summary-label">更新方式</p>
+                <p class="summary-value">应用内检测与在线升级</p>
+              </div>
+              <div class="summary-item">
+                <p class="summary-label">安装包</p>
+                <p class="summary-value" id="archive-name">Sparkle ZIP</p>
+              </div>
+              <div class="summary-item">
+                <p class="summary-label">更新记录</p>
+                <p class="summary-value">公开托管于 GitHub Pages</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="details">
+        <article class="detail-card">
+          <h2>首次打开</h2>
+          <p>如果当前构建仍属于测试签名模式，macOS 首次打开时可能会拦截。这不是安装损坏，而是系统默认保护。</p>
+          <ol class="steps">
+            <li>
+              <span class="step-no">01</span>
+              <span>下载并解压安装包，把 <strong>DarkRoom.app</strong> 移到“应用程序”。</span>
+            </li>
+            <li>
+              <span class="step-no">02</span>
+              <span>如果直接双击被拦截，请在访达里对应用 <strong>右键 -> 打开</strong>。</span>
+            </li>
+            <li>
+              <span class="step-no">03</span>
+              <span>若仍提示风险，可到 <strong>系统设置 -> 隐私与安全性</strong> 中选择“仍要打开”。</span>
+            </li>
+          </ol>
+        </article>
+
+        <article class="detail-card">
+          <h2>这页负责什么</h2>
+          <p>这个公开站点只负责分发，不承载源代码。应用更新依赖同一站点上的稳定资源路径。</p>
+          <ul class="bullets">
+            <li>
+              <span class="step-no">•</span>
+              <span><strong>下载入口</strong>：提供当前可安装的 macOS 版本。</span>
+            </li>
+            <li>
+              <span class="step-no">•</span>
+              <span><strong>更新源</strong>：`appcast.xml` 供应用内检查新版本使用。</span>
+            </li>
+            <li>
+              <span class="step-no">•</span>
+              <span><strong>版本说明</strong>：每个版本的变更说明会单独归档。</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>
+          当前下载页会自动读取
+          <a href="./appcast.xml">appcast.xml</a>
+          中的最新版本信息。
+        </div>
+        <div>
+          源代码仓库：
+          <a href="https://github.com/Maydisease/codex-image-studio">Maydisease/codex-image-studio</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const formatDate = (value) => {
+        const parsed = new Date(value);
+        if (Number.isNaN(parsed.getTime())) {
+          return null;
+        }
+
+        return new Intl.DateTimeFormat("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(parsed);
+      };
+
+      const text = (node, value) => {
+        if (node && value) {
+          node.textContent = value;
+        }
+      };
+
+      const href = (node, value) => {
+        if (node && value) {
+          node.href = value;
+        }
+      };
+
+      const applyItem = (item) => {
+        const version = item.querySelector("sparkle\\:shortVersionString")?.textContent?.trim();
+        const pubDate = item.querySelector("pubDate")?.textContent?.trim();
+        const notesLink = item.querySelector("sparkle\\:releaseNotesLink")?.textContent?.trim();
+        const enclosure = item.querySelector("enclosure");
+        const downloadUrl = enclosure?.getAttribute("url");
+        const minimumSystem = item
+          .querySelector("sparkle\\:minimumSystemVersion")
+          ?.textContent?.trim();
+
+        if (version) {
+          text(document.querySelector("#latest-version"), `v${version}`);
+        }
+
+        if (minimumSystem) {
+          text(document.querySelector("#system-pill"), `macOS ${minimumSystem}+`);
+        }
+
+        const formattedDate = formatDate(pubDate);
+        if (formattedDate) {
+          text(document.querySelector("#updated-pill"), `发布于 ${formattedDate}`);
+        }
+
+        if (downloadUrl) {
+          href(document.querySelector("#download-button"), downloadUrl);
+          const archiveName = downloadUrl.split("/").pop();
+          text(document.querySelector("#archive-name"), archiveName);
+        }
+
+        if (notesLink) {
+          href(document.querySelector("#release-notes-button"), notesLink);
+          href(document.querySelector("#nav-release-notes"), notesLink);
+        }
+      };
+
+      fetch("./appcast.xml", { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to load appcast: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then((xmlText) => {
+          const xml = new DOMParser().parseFromString(xmlText, "text/xml");
+          const item = xml.querySelector("channel > item");
+          if (item) {
+            applyItem(item);
+          }
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+    </script>
   </body>
 </html>
