@@ -343,7 +343,6 @@
           <span class="brand-name">DarkRoom</span>
         </div>
         <nav class="top-links" aria-label="快捷链接">
-          <a class="text-link" href="./appcast.xml">更新源</a>
           <a class="text-link" id="nav-release-notes" href="./releases/">版本说明</a>
         </nav>
       </header>
@@ -363,7 +362,7 @@
             <p class="version" id="latest-version">读取中</p>
             <div class="meta-row">
               <span class="meta-pill" id="system-pill">macOS 13+</span>
-              <span class="meta-pill" id="updated-pill">连接更新源</span>
+              <span class="meta-pill" id="updated-pill">正在同步</span>
             </div>
             <div class="actions">
               <a
@@ -387,16 +386,16 @@
             <p class="kicker" id="summary-title">Overview</p>
             <div class="summary-grid">
               <div class="summary-item">
-                <p class="summary-label">更新方式</p>
-                <p class="summary-value">应用内检测与在线升级</p>
+                <p class="summary-label">适用系统</p>
+                <p class="summary-value" id="summary-system">macOS 13+</p>
               </div>
               <div class="summary-item">
-                <p class="summary-label">安装包</p>
-                <p class="summary-value" id="archive-name">读取中</p>
+                <p class="summary-label">发布内容</p>
+                <p class="summary-value">最新 macOS 安装包</p>
               </div>
               <div class="summary-item">
                 <p class="summary-label">更新记录</p>
-                <p class="summary-value">公开托管于 GitHub Pages</p>
+                <p class="summary-value">版本说明随发布同步更新</p>
               </div>
             </div>
           </section>
@@ -461,6 +460,7 @@
 
         if (minimumSystem) {
           text(document.querySelector("#system-pill"), `macOS ${minimumSystem}+`);
+          text(document.querySelector("#summary-system"), `macOS ${minimumSystem}+`);
         }
 
         const formattedDate = formatDate(pubDate);
@@ -470,8 +470,6 @@
 
         if (downloadUrl) {
           href(document.querySelector("#download-button"), downloadUrl);
-          const archiveName = downloadUrl.split("/").pop();
-          text(document.querySelector("#archive-name"), archiveName);
         }
 
         if (notesLink) {
@@ -482,8 +480,7 @@
 
       const applyFallback = () => {
         text(document.querySelector("#latest-version"), "线上访问");
-        text(document.querySelector("#updated-pill"), "本地文件无法读取更新源");
-        text(document.querySelector("#archive-name"), "请打开公开下载页");
+        text(document.querySelector("#updated-pill"), "请打开线上页面");
 
         const landingPage = "https://maydisease.github.io/codex-image-studio-distribution/";
         href(document.querySelector("#download-button"), landingPage);
