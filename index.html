@@ -6,7 +6,7 @@
     <title>DarkRoom</title>
     <meta
       name="description"
-      content="DarkRoom 是一个面向 macOS 的图片工作台。下载最新版本，查看更新记录，并了解首次打开说明。"
+      content="DarkRoom 是一个面向 macOS 的图片工作台。下载最新版本并查看版本说明。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -295,87 +295,8 @@
         color: var(--text);
       }
 
-      .details {
-        margin-top: 18px;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-      }
-
-      .detail-card {
-        padding: 22px 22px 24px;
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.68);
-      }
-
-      .detail-card h2 {
-        margin: 0 0 14px;
-        font-family: "Newsreader", ui-serif, serif;
-        font-size: 28px;
-        font-weight: 500;
-        letter-spacing: -0.03em;
-      }
-
-      .detail-card p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 15px;
-        line-height: 1.7;
-      }
-
-      .steps,
-      .bullets {
-        margin: 14px 0 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .steps li,
-      .bullets li {
-        display: grid;
-        grid-template-columns: 22px 1fr;
-        gap: 12px;
-        padding: 12px 0;
-        border-top: 1px solid rgba(29, 29, 24, 0.08);
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.65;
-      }
-
-      .steps li:first-child,
-      .bullets li:first-child {
-        border-top: 0;
-        padding-top: 0;
-      }
-
-      .steps strong,
-      .bullets strong {
-        color: var(--text);
-        font-weight: 600;
-      }
-
-      .step-no {
-        font-size: 12px;
-        color: var(--soft);
-        padding-top: 2px;
-      }
-
-      .footer {
-        margin-top: 18px;
-        padding: 0 6px;
-        color: var(--soft);
-        font-size: 12px;
-        line-height: 1.8;
-      }
-
-      .footer a {
-        color: var(--muted);
-      }
-
       @media (max-width: 900px) {
-        .hero,
-        .details {
+        .hero {
           grid-template-columns: 1fr;
         }
 
@@ -403,8 +324,7 @@
         }
 
         .download-panel,
-        .summary-panel,
-        .detail-card {
+        .summary-panel {
           padding-left: 18px;
           padding-right: 18px;
         }
@@ -483,57 +403,6 @@
         </div>
       </section>
 
-      <section class="details">
-        <article class="detail-card">
-          <h2>首次打开</h2>
-          <p>如果当前构建仍属于测试签名模式，macOS 首次打开时可能会拦截。这不是安装损坏，而是系统默认保护。</p>
-          <ol class="steps">
-            <li>
-              <span class="step-no">01</span>
-              <span>下载并解压安装包，把 <strong>DarkRoom.app</strong> 移到“应用程序”。</span>
-            </li>
-            <li>
-              <span class="step-no">02</span>
-              <span>如果直接双击被拦截，请在访达里对应用 <strong>右键 -> 打开</strong>。</span>
-            </li>
-            <li>
-              <span class="step-no">03</span>
-              <span>若仍提示风险，可到 <strong>系统设置 -> 隐私与安全性</strong> 中选择“仍要打开”。</span>
-            </li>
-          </ol>
-        </article>
-
-        <article class="detail-card">
-          <h2>这页负责什么</h2>
-          <p>这个公开站点只负责分发，不承载源代码。应用更新依赖同一站点上的稳定资源路径。</p>
-          <ul class="bullets">
-            <li>
-              <span class="step-no">•</span>
-              <span><strong>下载入口</strong>：提供当前可安装的 macOS 版本。</span>
-            </li>
-            <li>
-              <span class="step-no">•</span>
-              <span><strong>更新源</strong>：`appcast.xml` 供应用内检查新版本使用。</span>
-            </li>
-            <li>
-              <span class="step-no">•</span>
-              <span><strong>版本说明</strong>：每个版本的变更说明会单独归档。</span>
-            </li>
-          </ul>
-        </article>
-      </section>
-
-      <footer class="footer">
-        <div>
-          当前下载页会自动读取
-          <a href="./appcast.xml">appcast.xml</a>
-          中的最新版本信息。
-        </div>
-        <div>
-          源代码仓库：
-          <a href="https://github.com/Maydisease/codex-image-studio">Maydisease/codex-image-studio</a>
-        </div>
-      </footer>
     </main>
 
     <script>
