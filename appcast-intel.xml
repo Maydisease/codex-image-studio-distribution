@@ -6,18 +6,18 @@
     <description>DarkRoom macOS updates</description>
     <language>en</language>
     <item>
-      <title>Version 0.13.3</title>
-      <pubDate>Wed, 06 May 2026 02:55:18 +0000</pubDate>
-      <sparkle:version>20260506.024925</sparkle:version>
-      <sparkle:shortVersionString>0.13.3</sparkle:shortVersionString>
+      <title>Version 0.13.4</title>
+      <pubDate>Wed, 06 May 2026 05:36:35 +0000</pubDate>
+      <sparkle:version>20260506.053102</sparkle:version>
+      <sparkle:shortVersionString>0.13.4</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-      <sparkle:releaseNotesLink>https://maydisease.github.io/codex-image-studio-distribution/releases/0.13.3.html</sparkle:releaseNotesLink>
+      <sparkle:releaseNotesLink>https://maydisease.github.io/codex-image-studio-distribution/releases/0.13.4.html</sparkle:releaseNotesLink>
       <enclosure
-        url="https://maydisease.github.io/codex-image-studio-distribution/downloads/codex-image-studio-macos-intel-0.13.3.zip"
-        sparkle:version="20260506.024925"
-        sparkle:shortVersionString="0.13.3"
-        sparkle:edSignature="PNwcrnylz6wHzL4B85I5XTUXVC1lS3zsPLtZmT760dALyEnNINroxAB8lZE5jvRTpqDf4vlHczoQj2yaBv/PCA=="
-        length="13546705"
+        url="https://maydisease.github.io/codex-image-studio-distribution/downloads/codex-image-studio-macos-intel-0.13.4.zip"
+        sparkle:version="20260506.053102"
+        sparkle:shortVersionString="0.13.4"
+        sparkle:edSignature="1t8ZnsyNA/c4X5TkNpSGIvZeUqohr6MgAGlUNC3x8pRk6qv9Ekl9aNkgNtY7dcjZnqv86AIbo7nFd1oR7OQXAw=="
+        length="13552093"
         type="application/octet-stream" />
     </item>
   </channel>
